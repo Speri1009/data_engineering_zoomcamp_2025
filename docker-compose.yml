@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+    pgdatabase:
+      image: postgres:13
+      container_name: pgres-database
+      environment:
+        - POSTGRES_USER=root
+        - POSTGRES_PASSWORD=root
+        - POSTGRES_DB=ny_taxi
+      volumes:
+        - "./ny_taxi_postgres_data:/var/lib/postgresql/data"
+      ports:
+        - "5431:5432"
+      user: "502:20"
+      # networks:
+      #   - pg-network
+    pgadmin:
+      image: dpage/pgadmin4  # Correct image for PGAdmin
+      container_name: pgadmin-2
+      environment:
+        - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+        - PGADMIN_DEFAULT_PASSWORD=root
+      ports:
+        - "8080:80"
+      # networks:
+      #   - pg-network
+    # python-script:
+    #   build:
+    #     context: .
+    #     dockerfile: Dockerfile
+    #   image: taxi_ingestion_py
+    #   container_name: python-script
+    #   volumes:
+    #   - .:/app  # Mount the current directory for live editing
+    #   command: python ingest-data.py ingest-data.py  
+    #         --user=root   --password=root   --host=localhost   
+    #         --port=5432   --db=ny_taxi   --table_name=greentripdata_2019-09
+    #   environment:
+    #   - ENV=development  # Example environment variable

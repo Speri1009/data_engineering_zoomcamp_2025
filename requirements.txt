@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-
-Flask==1.1.2
-GitPython==3.1.11
 Jinja2==2.11.2
 PyYAML==5.3.1
 awscli==1.18.145
 marshmallow==3.7.0
 numpy
 pandas
-plotly==4.8.2
-pylint==2.7.2
+pgcli
+sqlalchemy
+psycopg2
+pyarrow
