@@ -21,10 +21,12 @@ def main(params):
     engine = create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db}")
     # engine = create_engine("postgresql://root:root@localhost:5432/ny_taxi")
     # test_engine = engine.connect()
+    df_zones = pd.read_csv("taxi_zone_lookup.csv")
+    df_zones.to_sql(name="taxi_zones", con=engine, if_exists="append")
+    print(df_zones.head(10))
+    df = pq.read_metadata("green_tripdata_2019-10.parquet")
 
-    df = pq.read_metadata("green_tripdata_2019-09.parquet")
-
-    file = pq.ParquetFile("green_tripdata_2019-09.parquet")
+    file = pq.ParquetFile("green_tripdata_2019-10.parquet")
     table = file.read()
     print(table.schema)
     df = table.to_pandas()
@@ -53,6 +55,9 @@ def main(params):
     print(
         f"Completed! Total time taken was {t_end - t_start:10.3f} seconds for {count} batches."
     )
+
+
+## upload new table for zones
 
 
 if __name__ == "__main__":
